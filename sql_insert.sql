@@ -133,3 +133,19 @@ INSERT INTO TrackCollection(track_id, collection_id)
 VALUES(3, 4);
 INSERT INTO TrackCollection(track_id, collection_id) 
 VALUES(4, 4);
+
+
+INSERT INTO Performer(id, nickname) 
+VALUES(default, 'Asking Alexandria');
+
+INSERT INTO GenrePerformer(genre_id, performer_id) 
+VALUES(1, 5);
+
+INSERT INTO Album(id, title, year_of_release) 
+VALUES(default, 'See What’s on the Inside', '2021-10-01');
+
+INSERT INTO AlbumPerformer(album_id, performer_id) 
+VALUES(6, 5);
+
+INSERT INTO Track(id, title, duration, album_id) 
+VALUES(default, 'Find Myself', 280, 6);

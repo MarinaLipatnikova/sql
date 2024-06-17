@@ -23,7 +23,7 @@ where nickname not like '% %'
 --Название треков, которые содержат слово «мой» или «my».
 select title 
 from track t 
-where title like '%My%' or title like '%my%'
+where string_to_array(lower(title), ' ') && array ['my']
 
 ------------------------------------------------------------------------------
 
@@ -49,16 +49,13 @@ join album a ON t.album_id = a.id
 group by a.title 
 
 --Все исполнители, которые не выпустили альбомы в 2020 году.
-select nickname 
+select nickname
 from performer p 
-join albumperformer a on a.performer_id = p.id 
-join album a2 on a2.id = a.album_id 
-where extract(year from a2.year_of_release) != 2020 and p.nickname not in 
-(select nickname from performer p 
-join albumperformer a on a.performer_id = p.id 
-join album a2 on a2.id = a.album_id 
-group by p.nickname 
-having count(a2.id) > 1)
+where p.id not in (
+select a.performer_id 
+from albumperformer a 
+join album a2 on a.album_id = a2.id 
+where extract(year from a2.year_of_release) = 2020)  
 
 --Названия сборников, в которых присутствует конкретный исполнитель.
 select distinct c.title 
